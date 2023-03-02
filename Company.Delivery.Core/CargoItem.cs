@@ -1,4 +1,7 @@
-﻿namespace Company.Delivery.Core;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Company.Delivery.Core;
 
 public class CargoItem
 {
@@ -8,8 +11,10 @@ public class CargoItem
 
     public Waybill? Waybill { get; set; }
 
-    // TODO: Уникальное значение в пределах сущности Waybill
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [MaxLength(10)]
     public string Number { get; set; } = null!;
 
+    [MaxLength(10)]
     public string Name { get; set; } = null!;
 }

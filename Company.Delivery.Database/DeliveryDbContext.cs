@@ -1,12 +1,13 @@
-using Company.Delivery.Core;
+﻿using Company.Delivery.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.Delivery.Database;
 
 public class DeliveryDbContext : DbContext
 {
-    public DeliveryDbContext(DbContextOptions<DeliveryDbContext> options) : base(options) {}
-
+    public DeliveryDbContext(DbContextOptions<DeliveryDbContext> options) : base(options)
+    {
+    }
     public DbSet<CargoItem> CargoItems { get; protected init; } = null!;
 
     public DbSet<Waybill> Waybills { get; protected init; } = null!;
@@ -15,7 +16,7 @@ public class DeliveryDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // TODO: регистрация всех реализаций IEntityTypeConfiguration в сборке Company.Delivery.Database
-        throw new NotImplementedException();
+        modelBuilder.Entity<CargoItem>();
+        modelBuilder.Entity<Waybill>();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Company.Delivery.Api.Controllers.Waybills;
+﻿using AutoMapper;
+using Company.Delivery.Api.Controllers.Waybills;
 using Company.Delivery.Domain;
 using Company.Delivery.Domain.Dto;
 using Moq;
@@ -11,6 +12,7 @@ public class WaybillsControllerFixture
     {
         var waybillDto = GetByIdDto();
         var waybillService = new Mock<IWaybillService>();
+        var mapper = new Mock<IMapper>();
 
         waybillService.Setup(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Guid id, CancellationToken _) => id == waybillDto.Id ? waybillDto : throw new EntityNotFoundException());
@@ -23,7 +25,7 @@ public class WaybillsControllerFixture
         waybillService.Setup(x => x.DeleteByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .Returns((Guid id, CancellationToken _) => id == waybillDto.Id ? Task.CompletedTask : throw new EntityNotFoundException());
 
-        Instance = new WaybillsController(waybillService.Object);
+        Instance = new WaybillsController(waybillService.Object, mapper.Object);
     }
 
     public WaybillsController Instance { get; }
